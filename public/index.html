@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Signal — Live News Wire</title>
+  <meta name="description" content="A live news wire with a per-story source-reliability signal." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="live-pulse" id="statusDot" aria-hidden="true"></span>
+      <span class="topbar-date" id="topbarDate"></span>
+    </div>
+
+    <div class="masthead">
+      <span class="masthead-the">The</span>
+      <span class="masthead-brand">Signal<span class="masthead-asterisk">*</span></span>
+    </div>
+
+    <div class="topbar-right">
+      <button id="searchToggle" class="icon-btn" type="button" aria-label="Search" aria-expanded="false">
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="9" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="14" y1="14" x2="18.5" y2="18.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <button id="menuToggle" class="menu-btn" type="button" aria-expanded="false">Menu <span class="chevron" aria-hidden="true">›</span></button>
+    </div>
+  </header>
+
+  <div class="dropdown search-dropdown" id="searchPanel" hidden>
+    <input type="search" id="searchInput" placeholder="Search all sources…" aria-label="Search headlines" />
+  </div>
+
+  <div class="dropdown menu-dropdown" id="menuPanel" hidden>
+    <div class="menu-row" id="languageSection" hidden>
+      <span class="menu-label">Language</span>
+      <div class="chips" id="languageChips"></div>
+    </div>
+    <div class="menu-row">
+      <span class="menu-label">Time range</span>
+      <select id="timeRange" aria-label="Time range">
+        <option value="today" selected>Today</option>
+      </select>
+      <input type="date" id="specificDate" aria-label="Pick a specific date" title="Pick an exact date instead of a preset range" />
+      <button id="clearDate" type="button" hidden>Clear date</button>
+    </div>
+    <div class="menu-row">
+      <span class="menu-label">Auto-refresh</span>
+      <select id="refreshInterval" aria-label="Auto-refresh interval">
+        <option value="60000">1 min</option>
+        <option value="180000" selected>3 min</option>
+        <option value="300000">5 min</option>
+        <option value="600000">10 min</option>
+        <option value="0">Off</option>
+      </select>
+      <button id="refreshBtn" type="button">Refresh now</button>
+      <span id="statusCountdown" class="menu-countdown"></span>
+    </div>
+    <p class="provider-note" id="providerNote" hidden></p>
+    <p class="menu-note">Colored tags on each story are a <strong>reliability signal</strong>, not a fact-check — source track record, headline style, and whether other outlets are reporting it too. Always read past the headline.</p>
+  </div>
+
+  <nav class="site-nav" id="categoryChips">
+    <button class="nav-link active" data-cat="general" type="button">General</button>
+    <button class="nav-link" data-cat="local" type="button">Local</button>
+    <button class="nav-link" data-cat="publishers" type="button">Publishers</button>
+    <button class="nav-link" data-cat="business" type="button">Business</button>
+    <button class="nav-link" data-cat="technology" type="button">Technology</button>
+    <button class="nav-link" data-cat="science" type="button">Science</button>
+    <button class="nav-link" data-cat="health" type="button">Health</button>
+    <button class="nav-link" data-cat="sports" type="button">Sports</button>
+    <button class="nav-link" data-cat="entertainment" type="button">Entertainment</button>
+  </nav>
+
+  <main class="page" id="page" aria-busy="true" aria-live="polite">
+    <div class="empty">Tuning in…</div>
+  </main>
+
+  <div class="reader-panel" id="readerPanel" aria-hidden="true">
+    <div class="reader-header">
+      <span class="reader-source" id="readerSource"></span>
+      <div class="reader-actions">
+        <a id="readerOpenNewTab" class="reader-link" href="#" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
+        <button id="readerClose" class="reader-close" type="button" aria-label="Close reader">×</button>
+      </div>
+    </div>
+    <p class="reader-hint">Some sites block being shown this way — if it looks blank, use "open in new tab."</p>
+    <iframe id="readerFrame" class="reader-frame" title="Article content" src="about:blank" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
